@@ -1,4 +1,5 @@
 Copyright © 2026 Iosif00024
+This repository and the files from sites.google.com/view/honeybell
 Permissions:
 - view
 - copy
