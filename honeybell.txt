@@ -1,0 +1,2 @@
+requirements for the released browser: if the browser doesn't work, "Microsoft Edge WebView2" could be needed
+possible requirements for compilation of the source code: windows 10/ 11 (could also work on other), python 3,9+ and pyside6 (pip install pyside6)
