@@ -14,5 +14,4 @@ features:
 - page-save
 - file download
 - source code available
-download: https://sites.google.com/view/honeybell/minneola-1-4
 !!! the browser or its featues can sometimes not function
