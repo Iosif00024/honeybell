@@ -20,7 +20,7 @@
 ## Requirements
 
 ### For the Released Browser
-If the browser does not work, **Microsoft Edge WebView2** could be needed.
+If the browser does not work, **Microsoft Edge WebView2** or/ and **python 3.9+** could be needed.
 
 ### For Source Code Compilation
 * **OS:** Windows 10 / 11 (could also work on others)
