@@ -1,5 +1,5 @@
 ## Copyright © 2026 Iosif00024
-## This repository and the files from [sites.google.com/view/honeybell](https://sites.google.com/view/honeybell/home)
+## The repository [github.com/Iosif00024/honeybell](https://github.com/Iosif00024/honeybell) and the files from [sites.google.com/view/honeybell](https://sites.google.com/view/honeybell/home)
 ## Permissions:
 * view
 * copy
