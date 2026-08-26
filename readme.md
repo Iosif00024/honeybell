@@ -18,29 +18,20 @@ warning: the browser isn't as stylish as the panel from above xD
 * **fullscreen**
 * **print**
 * **user agent ([webview.py](https://github.com/Iosif00024/honeybell-browser/blob/main/minneola/webview.py))**
+* **hardware acceleration**
+* **console with logs**
 
----
-
-## requirements:
-
-### for the released browser:
-if the browser does not work, **microsoft edge webview2** or/ and **python 3.9+** added to path could be needed.
-
-### for source code compilation:
-* **os:** tested on windows 10 (could also work on other)
-* **python:** tested with 3.13+
-* **and:** pyside6
-
----
-
-## download page:
-[https://sites.google.com/view/honeybell](https://sites.google.com/view/honeybell)
-
----
-
-> [!IMPORTANT]
+> [!NOTE]
 > a cache and `honeybell` folder might be created:
 > `C:\Users\--the--user--\AppData\Local\honeybell`
+
+> [!NOTE]
+> google.com account system can have this:
+> `This browser or app may not be secure. Learn more`
+> `Try using a different browser. If you’re already using a supported browser, you can try again to sign in.`
+
+> [!NOTE]
+> a windows protection windows can also appear: "Windows protected your PC" -> the project is available online and was tested but him or its features can go wrong... 
 
 > [!WARNING]
 > the browser or its features can go wrong !!!

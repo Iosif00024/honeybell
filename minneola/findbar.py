@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 class FindBar(QWidget):
-    find_requested = Signal(str, bool)  # text, backward
+    find_requested = Signal(str, bool)
     closed = Signal()
     def __init__(self, parent):
         super().__init__(parent)
@@ -18,7 +18,7 @@ class FindBar(QWidget):
         layout.setContentsMargins(8, 6, 8, 6)
         layout.setSpacing(6)
         self.input = QLineEdit(objectName="findInput")
-        self.input.setPlaceholderText("Find in page")
+        self.input.setPlaceholderText("found in page")
         self.input.returnPressed.connect(lambda: self.find_requested.emit(
             self.input.text(), False))
         self.input.textChanged.connect(self.reset_count)
@@ -27,19 +27,19 @@ class FindBar(QWidget):
         layout.addWidget(self.count_label)
         previous = QPushButton("\u2191", objectName="findButton")
         previous.setFixedSize(30, 26)
-        previous.setToolTip("Previous (Shift+F3)")
+        previous.setToolTip("previous (shift+f3)")
         previous.clicked.connect(lambda: self.find_requested.emit(
             self.input.text(), True))
         layout.addWidget(previous)
         nxt = QPushButton("\u2193", objectName="findButton")
         nxt.setFixedSize(30, 26)
-        nxt.setToolTip("Next (F3)")
+        nxt.setToolTip("next (f3)")
         nxt.clicked.connect(lambda: self.find_requested.emit(
             self.input.text(), False))
         layout.addWidget(nxt)
         close = QPushButton("\u00d7", objectName="findButton")
         close.setFixedSize(30, 26)
-        close.setToolTip("Closed (Esc)")
+        close.setToolTip("closed (esc)")
         close.clicked.connect(self.close_bar)
         layout.addWidget(close)
         escape = QShortcut(QKeySequence("Escape"), self)
@@ -65,5 +65,5 @@ class FindBar(QWidget):
         elif matches:
             self.count_label.setText(f"{active}/{matches}")
         else:
-            self.count_label.setText("No matches")
+            self.count_label.setText("no matches")
         self.adjustSize()

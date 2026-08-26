@@ -48,7 +48,7 @@ class BookmarkBar(QToolBar):
         self._buttons = []
         if not self.bookmarks:
             hint = QToolButton(objectName="bookmarkHint")
-            hint.setText("No bookmarks yet \u2014 Ctrl+D for bookmarking this page")
+            hint.setText("no bookmarks yet \u2014 Ctrl+D for bookmarking this page")
             hint.setEnabled(False)
             self.addWidget(hint)
             self._buttons.append(hint)

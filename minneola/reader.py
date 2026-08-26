@@ -33,7 +33,6 @@ li { margin:4px 0; }
 hr { border:none; border-top:1px solid #e5e5e5; margin:28px 0; }
 """
 class ReaderParser(HTMLParser):
-    """Collects readable blocks from a page's HTML."""
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.title = ""

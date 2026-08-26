@@ -141,7 +141,7 @@ BUILTIN_RULES = (
     "facebook.com/tr",
 )
 BLOCKED_PAGE = """<!DOCTYPE html><html><head><meta charset="utf-8">
-<title>Page unavailable</title><style>
+<title>page unavailable</title><style>
 body {{ background:#f2f2f2; color:#444; font-family:'Segoe UI',Arial,sans-serif;
 display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }}
 .box {{ text-align:center; max-width:440px; }}
@@ -149,20 +149,20 @@ h1 {{ font-size:22px; font-weight:500; color:#333; margin:0 0 10px; }}
 p {{ font-size:13px; color:#777; margin:0 0 14px; }}
 code {{ font-size:11px; color:#b0b0b0; }}
 </style></head><body><div class="box">
-<h1>This page is unavailable</h1>
-<p>It may be restricted or temporarily unreachable.</p>
+<h1>this page is unavailable</h1>
+<p>it may be restricted or temporarily unreachable.</p>
 <code>{code}</code>
 </div></body></html>"""
 COSMETIC_JS = """(function () {
-    var bad = ["doubleclick", "googlesyndication", "googleadservices",
+    var b = ["doubleclick", "googlesyndication", "googleadservices",
                "taboola", "outbrain", "adnxs", "criteo", "scorecardresearch",
                "pubmatic", "rubiconproject", "smartadserver", "mgid",
                "revcontent", "amazon-adsystem", "moatads"];
-    function isBad(value) {
+    function isb(value) {
         if (!value) { return false; }
         value = value.toLowerCase();
-        for (var i = 0; i < bad.length; i++) {
-            if (value.indexOf(bad[i]) !== -1) { return true; }
+        for (var i = 0; i < b.length; i++) {
+            if (value.indexOf(b[i]) !== -1) { return true; }
         }
         return false;
     }
@@ -173,7 +173,7 @@ COSMETIC_JS = """(function () {
                 var node = media[i];
                 var src = node.getAttribute && (node.getAttribute("src") ||
                          node.getAttribute("data-src"));
-                if (isBad(src)) { node.remove(); }
+                if (isb(src)) { node.remove(); }
             }
             var boxes = root.querySelectorAll(
                 "ins.adsbygoogle, [id^='google_ads'], [id^='div-gpt-ad'], " +

@@ -3,11 +3,25 @@ import sys
 import threading
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-os.environ.setdefault(
-    "QTWEBENGINE_CHROMIUM_FLAGS",
-    "--disable-gpu --disable-logging --log-level=3")
-os.environ.setdefault("QT_LOGGING_RULES", "qt.webenginecontext.debug=false")
 from minneola import APP_DISPLAY, VERSION
+def apply_chromium_flags(settings):
+    """rendering mode:
+
+    hardware_acceleration (default on): ANGLE/Direct3D 11
+    set "hardware_acceleration": false in settings.json for pure-software
+    """
+    if settings.get("hardware_acceleration", True):
+        mode = "--use-angle=d3d11 --enable-gpu-rasterization"
+        label = "gpu (angle/d3d11)"
+    else:
+        mode = "--disable-gpu"
+        label = "software"
+    os.environ.setdefault(
+        "QTWEBENGINE_CHROMIUM_FLAGS",
+        mode + " --disable-logging --log-level=3 "
+               "--disable-features=CalculateNativeWinOcclusion")
+    os.environ.setdefault("QT_LOGGING_RULES", "qt.webenginecontext.debug=false")
+    print(f"[{APP_DISPLAY}] rendering for: {label}")
 def get_resource_path(relative_path):
     base = getattr(sys, "_MEIPASS", os.path.abspath(os.path.dirname(__file__)))
     return os.path.join(base, relative_path)
@@ -37,6 +51,9 @@ def main():
     from PySide6.QtCore import Qt, QTimer
     from PySide6.QtGui import QIcon
     from PySide6.QtWidgets import QApplication
+    from minneola.storage import load_settings
+    settings = load_settings()
+    apply_chromium_flags(settings)
     if hasattr(Qt, "AA_ShareOpenGLContexts"):
         QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
     app = QApplication(sys.argv)
@@ -47,9 +64,7 @@ def main():
     if icon_path:
         app.setWindowIcon(QIcon(icon_path))
     from minneola.browser import Browser
-    from minneola.storage import load_settings
     from minneola.webview import create_profile
-    settings = load_settings()
     profile = create_profile()
     start_url = "about:blank"
     for argument in sys.argv[1:]:

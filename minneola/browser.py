@@ -96,15 +96,15 @@ class Browser(QMainWindow):
         self.toolbar.setFloatable(False)
         self.addToolBar(self.toolbar)
         self.back_button = self.add_toolbar_button("\u2190", self.go_back,
-                                                   "Back (Alt+Left)")
+                                                   "back (Alt+Left)")
         self.forward_button = self.add_toolbar_button("\u2192", self.go_forward,
-                                                      "Forward (Alt+Right)")
+                                                      "forward (Alt+Right)")
         self.reload_button = self.add_toolbar_button("\u21bb", self.toggle_reload,
-                                                     "Reload (F5)")
-        self.add_toolbar_button("+", self.add_tab, "New tab (Ctrl+T)")
+                                                     "reload (F5)")
+        self.add_toolbar_button("+", self.add_tab, "new tab (Ctrl+T)")
         self.engine_button = QPushButton("D", objectName="toolbarButton")
         self.engine_button.setFixedWidth(44)
-        self.engine_button.setToolTip("Search engine")
+        self.engine_button.setToolTip("search engine")
         self.engine_button.clicked.connect(self.show_engine_menu)
         self.toolbar.addWidget(self.engine_button)
         self.update_engine_button()
@@ -117,14 +117,14 @@ class Browser(QMainWindow):
         self.toolbar.addWidget(self.address)
         self.shield_button = QPushButton("\U0001F6E1", objectName="toolbarButton")
         self.shield_button.setFixedWidth(44)
-        self.shield_button.setToolTip("Protection")
+        self.shield_button.setToolTip("protection")
         self.shield_button.clicked.connect(self.show_shield_menu)
         self.toolbar.addWidget(self.shield_button)
         self.star_button = self.add_toolbar_button(
             "\u2606", self.toggle_bookmark, "(Ctrl+D) for bookmarking this page")
         self.reader_button = QPushButton("Aa", objectName="toolbarButton")
         self.reader_button.setCheckable(True)
-        self.reader_button.setToolTip("Reader view (F9)")
+        self.reader_button.setToolTip("reader view (F9)")
         self.reader_button.clicked.connect(self.toggle_reader)
         self.toolbar.addWidget(self.reader_button)
         self.menu_button = self.add_toolbar_button("\u22ee", self.show_menu,
@@ -181,10 +181,10 @@ class Browser(QMainWindow):
         self.tray = QSystemTrayIcon(self.app_icon, self)
         self.tray.setToolTip(APP_DISPLAY)
         menu = QMenu()
-        menu.addAction("Show / hidden window", self.toggle_window_visible)
-        menu.addAction("New tab", self.add_tab)
+        menu.addAction("show / hidden window", self.toggle_window_visible)
+        menu.addAction("new tab", self.add_tab)
         menu.addSeparator()
-        menu.addAction("Quit", self.close)
+        menu.addAction("quit", self.close)
         self.tray.setContextMenu(menu)
         self.tray.activated.connect(self.on_tray_activated)
         self.tray.show()
@@ -314,7 +314,7 @@ class Browser(QMainWindow):
         if index < 0:
             return
         title = (title or "").strip()[:24]
-        self.tabs.setTabText(index, title or "New Tab")
+        self.tabs.setTabText(index, title or "new tab")
         if index == self.tabs.currentIndex():
             self.setWindowTitle(f"{title} \u2014 {APP_DISPLAY}" if title else APP_DISPLAY)
     def set_tab_icon(self, view, icon):
@@ -519,32 +519,36 @@ class Browser(QMainWindow):
         count = self.engine.blocked_on(host) if host else 0
         state = "on" if self.engine.enabled else "off"
         self.shield_button.setToolTip(
-            f"Protection {state} \u2014 {count} request(s) blocked on this page")
+            f"")
     def show_shield_menu(self):
         menu = QMenu(self)
-        adblock_action = menu.addAction("Ad blocker")
+        adblock_action = menu.addAction("ad blocker")
         adblock_action.setCheckable(True)
         adblock_action.setChecked(self.engine.enabled)
         adblock_action.triggered.connect(self.toggle_adblock)
-        https_action = menu.addAction("HTTPS-first")
+        https_action = menu.addAction("https-first")
         https_action.setCheckable(True)
         https_action.setChecked(bool(self.settings.get("force_https", True)))
         https_action.triggered.connect(self.toggle_https_first)
+        hw_action = menu.addAction("hardware acceleration")
+        hw_action.setCheckable(True)
+        hw_action.setChecked(bool(self.settings.get("hardware_acceleration", True)))
+        hw_action.triggered.connect(self.toggle_hardware_acceleration)
         menu.addSeparator()
         view = self.current_view()
         host = view.url().host().lower() if view is not None else ""
         if host:
             allowed = self.engine.host_in_set(host, self.engine.site_allow)
-            label = ("Blockage of ads on this site again" if allowed
-                     else "Permission for ads on this site")
+            label = ("blockage of ads on this site again" if allowed
+                     else "permission for ads on this site")
             menu.addAction(label,
                            lambda checked=False, h=host: self.toggle_site_allow(h))
         count_action = menu.addAction(
-            f"{self.engine.blocked_on(host)} blocked on this page \u2014 "
+            f"{self.engine.blocked_on(host)}\u2014 "
             f"{self.engine.total_blocked} total")
         count_action.setEnabled(False)
         menu.addSeparator()
-        menu.addAction("Rules file\u2026", self.open_rules_file)
+        menu.addAction("rules file\u2026", self.open_rules_file)
         menu.exec(self.shield_button.mapToGlobal(
             self.shield_button.rect().bottomLeft()))
     def toggle_adblock(self):
@@ -555,6 +559,14 @@ class Browser(QMainWindow):
     def toggle_https_first(self):
         self.settings["force_https"] = not self.settings.get("force_https", True)
         save_settings(self.settings)
+    def toggle_hardware_acceleration(self):
+        self.settings["hardware_acceleration"] = not self.settings.get(
+            "hardware_acceleration", True)
+        save_settings(self.settings)
+        QMessageBox.information(
+            self, APP_DISPLAY,
+            "hardware acceleration mode changed.\n"
+            "restart honeybell if you want to apply the new rendering mode.")
     def toggle_site_allow(self, host):
         if host in self.engine.site_allow:
             self.engine.site_allow.discard(host)
@@ -620,7 +632,7 @@ class Browser(QMainWindow):
             return
         name = (view.title().strip() or "page")[:40] + ".pdf"
         path, _ = QFileDialog.getSaveFileName(
-            self, "Save as PDF", name, "PDF (*.pdf)")
+            self, "save as pdf", name, "pdf (*.pdf)")
         if not path:
             return
         view.page().printToPdf(path)
@@ -860,31 +872,31 @@ class Browser(QMainWindow):
         return True, ""
     def show_menu(self):
         menu = QMenu(self)
-        menu.addAction("New tab\tCtrl+T", self.add_tab)
-        menu.addAction("Tab closed\tCtrl+W",
+        menu.addAction("new tab\tctrl+t", self.add_tab)
+        menu.addAction("tab closed\tctrl+w",
                        lambda: self.close_tab(self.tabs.currentIndex()))
         menu.addSeparator()
-        menu.addAction("Zoomed in\tCtrl++", self.zoom_in)
-        menu.addAction("Zoomed out\tCtrl+-", self.zoom_out)
-        menu.addAction("Zoom reset\tCtrl+0", self.zoom_reset)
+        menu.addAction("zoomed in\tctrl++", self.zoom_in)
+        menu.addAction("zoomed out\tctrl+-", self.zoom_out)
+        menu.addAction("zoom reset\tctrl+0", self.zoom_reset)
         menu.addSeparator()
-        bar_action = menu.addAction("Bookmarks bar\tCtrl+Shift+B",
+        bar_action = menu.addAction("bookmarks bar\tctrl+shift+b",
                                     self.toggle_bookmark_bar)
         bar_action.setCheckable(True)
         bar_action.setChecked(bool(self.settings.get("bookmarks_bar", True)))
-        menu.addAction("Bookmarks export\u2026", self.export_bookmarks)
-        menu.addAction("Bookmarks import\u2026", self.import_bookmarks)
+        menu.addAction("bookmarks export\u2026", self.export_bookmarks)
+        menu.addAction("bookmarks import\u2026", self.import_bookmarks)
         menu.addSeparator()
-        menu.addAction("Page searching\tCtrl+F", self.open_find)
-        menu.addAction("Reader view\tF9", self.toggle_reader)
-        menu.addAction("Save as PDF\tCtrl+Shift+S", self.save_as_pdf)
-        menu.addAction("Print\tCtrl+P", self.print_page)
+        menu.addAction("page searching\tctrl+f", self.open_find)
+        menu.addAction("reader view\tf9", self.toggle_reader)
+        menu.addAction("save as PDF\tctrl+shift+s", self.save_as_pdf)
+        menu.addAction("print\tctrl+p", self.print_page)
         menu.addSeparator()
-        menu.addAction("Fullscreen toggle\tF11", self.toggle_window_fullscreen)
+        menu.addAction("fullscreen toggle\tf11", self.toggle_window_fullscreen)
         menu.addSeparator()
-        menu.addAction(f"About {APP_DISPLAY}", lambda: QMessageBox.about(
+        menu.addAction(f"about {APP_DISPLAY}", lambda: QMessageBox.about(
             self, APP_DISPLAY,
-            f"<b>{APP_DISPLAY}</b> {'' }<br>A private browser.<br>"
+            f"<b>{APP_DISPLAY}</b> {'' }<br>a private browser.<br>"
             ""))
         menu.exec(self.menu_button.mapToGlobal(self.menu_button.rect().bottomLeft()))
     def on_tray_activated(self, reason):

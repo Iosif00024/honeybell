@@ -3,12 +3,13 @@ import os
 from PySide6.QtCore import QStandardPaths
 APP_FOLDER = "honeybell"
 DEFAULT_SETTINGS = {
-    "start_fullscreen": True,
+    "start_fullscreen": False,
     "bookmarks_bar": True,
     "search_engine": "duckduckgo",
     "adblock": True,
     "force_https": True,
     "whitelist_only": False,
+    "hardware_acceleration": True,
 }
 def data_dir():
     base = QStandardPaths.writableLocation(QStandardPaths.AppLocalDataLocation)
