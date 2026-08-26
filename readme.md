@@ -1,45 +1,42 @@
-# Honeybell 2.0
+# honeybell 2.0 (browser)
 
-## Features
-* **Start keyboard**
-* **Ad blocker included**
-* **HTTPS-First feature**
-* **Source code view**
-* **Page save**
-* **Files download**
-* **Reader view**
-* **Bookmarks**
-* **Zoom**
-* **Page search**
-* **Full-screen**
-* **Print**
-* **User agent**
-
----
-
-## Requirements
-
-### For the Released Browser
-If the browser does not work, **Microsoft Edge WebView2** or/ and **python 3.9+** added to path could be needed.
-
-### For Source Code Compilation
-* **OS:** Windows 10 / 11 (could also work on others)
-* **Python:** 3.9+
-* **And:** PySide6
-  ```bash
-  pip install pyside6
-  ```
+## features:
+* **start keyboard with interesting logic :)**
+* **ad blocker included (sites can be seen at [adblock.py](https://github.com/Iosif00024/honeybell-browser/blob/main/minneola/adblock.py))**
+* **https-first feature**
+* **source code view**
+* **page saver**
+* **files download**
+* **reader view**
+* **bookmarks**
+* **zoom**
+* **page searcher**
+* **fullscreen**
+* **print**
+* **user agent ([webview.py](https://github.com/Iosif00024/honeybell-browser/blob/main/minneola/webview.py))**
 
 ---
 
-## Download
-[sites.google.com/view/honeybell/home](https://sites.google.com/view/honeybell)
+## requirements:
+
+### for the released browser:
+if the browser does not work, **microsoft edge webview2** or/ and **python 3.9+** added to path could be needed.
+
+### for source code compilation:
+* **os:** tested on windows 10 (could also work on other)
+* **python:** tested with 3.13+
+* **and:** pyside6
+
+---
+
+## download page:
+[https://sites.google.com/view/honeybell](https://sites.google.com/view/honeybell)
 
 ---
 
 > [!IMPORTANT]
-> A cache and `honeybell` folder might be created. 
-> * **Possible Location (on Windows):** `C:\Users\--the--user--\AppData\Local\honeybell`
+> a cache and `honeybell` folder might be created:
+> `C:\Users\--the--user--\AppData\Local\honeybell`
 
 > [!WARNING]
-> The browser or its features can go wrong !!!
+> the browser or its features can go wrong !!!
