@@ -5,7 +5,7 @@
 warning: the browser isn't as stylish as the panel from above xD
 
 ## features:
-* **start keyboard with interesting logic :)**
+* **start keyboard with interesting logic**
 * **ad blocker included (sites can be seen at [adblock.py](https://github.com/Iosif00024/honeybell-browser/blob/main/minneola/adblock.py))**
 * **https-first feature**
 * **source code view**
