@@ -2,6 +2,8 @@
 
 <img width="1376" height="768" alt="honeybell_panel" src="https://github.com/user-attachments/assets/8d139b73-2389-4bfb-8b9f-d8b2093ab720" />
 
+warning: the browser isn't as stylish as the panel from above xD
+
 ## features:
 * **start keyboard with interesting logic :)**
 * **ad blocker included (sites can be seen at [adblock.py](https://github.com/Iosif00024/honeybell-browser/blob/main/minneola/adblock.py))**
