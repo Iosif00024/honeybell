@@ -21,7 +21,6 @@ def apply_chromium_flags(settings):
         mode + " --disable-logging --log-level=3 "
                "--disable-features=CalculateNativeWinOcclusion")
     os.environ.setdefault("QT_LOGGING_RULES", "qt.webenginecontext.debug=false")
-    print(f"[{APP_DISPLAY}] rendering for: {label}")
 def get_resource_path(relative_path):
     base = getattr(sys, "_MEIPASS", os.path.abspath(os.path.dirname(__file__)))
     return os.path.join(base, relative_path)
@@ -76,11 +75,9 @@ def main():
         browser.showFullScreen()
     else:
         browser.show()
-    print(f"[{APP_DISPLAY}] {VERSION} ready")
     if "--smoke" in sys.argv:
         QTimer.singleShot(2500, app.quit)
     exit_code = app.exec()
-    print(f"[{APP_DISPLAY}] exited cleanly")
     sys.exit(exit_code)
 if __name__ == "__main__":
     server = start_server()

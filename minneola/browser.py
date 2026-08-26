@@ -539,7 +539,7 @@ class Browser(QMainWindow):
         host = view.url().host().lower() if view is not None else ""
         if host:
             allowed = self.engine.host_in_set(host, self.engine.site_allow)
-            label = ("blockage of ads on this site again" if allowed
+            label = ("blockage of ads on this site" if allowed
                      else "permission for ads on this site")
             menu.addAction(label,
                            lambda checked=False, h=host: self.toggle_site_allow(h))
@@ -636,7 +636,6 @@ class Browser(QMainWindow):
         if not path:
             return
         view.page().printToPdf(path)
-        print(f"[honeybell] pdf saved: {path}")
     def print_page(self):
         view = self.current_view()
         if view is None:
@@ -648,7 +647,7 @@ class Browser(QMainWindow):
             if dialog.exec() == QPrintDialog.DialogCode.Accepted:
                 view.print(printer, lambda ok: None)
         except Exception as error:
-            print(f"[honeybell] print unavailable: {error}")
+            print("")
     def show_gesture(self, text):
         self.gesture_label.setText(text)
         self.gesture_label.adjustSize()
@@ -845,22 +844,17 @@ class Browser(QMainWindow):
             self, "Save file", os.path.join(folder, filename), "All files (*)")
         if not path:
             download.cancel()
-            print("[honeybell] download cancelled")
             return
         download.setDownloadDirectory(os.path.dirname(path))
         download.setDownloadFileName(os.path.basename(path))
         download.accept()
-        print(f"[honeybell] download started: {os.path.basename(path)}")
         def report():
             total = download.totalBytes() or 0
             done = download.receivedBytes()
-            if total:
-                print(f"[honeybell] download {done * 100 // total}%")
         if hasattr(download, "receivedBytesChanged"):
             download.receivedBytesChanged.connect(report)
         def finished():
             state = "completed" if download.state() == download.DownloadState.Completed else "stopped"
-            print(f"[honeybell] download {state}: {download.downloadFileName()}")
             self.handled_downloads.discard(id(download))
         download.finished.connect(finished)
     def check_navigation(self, url):
