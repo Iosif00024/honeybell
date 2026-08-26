@@ -21,14 +21,17 @@ warning: the browser isn't as stylish as the panel from above xD
 * **hardware acceleration**
 * **console with logs**
 
-> [!IMPORTANT]
+> [!NOTE]
 > a cache and `honeybell` folder might be created:
 > `C:\Users\--the--user--\AppData\Local\honeybell`
+
+> [!NOTE]
 > google.com account system can have this:
->> `This browser or app may not be secure. Learn more`
->> `Try using a different browser. If you’re already using a supported browser, you can try again to sign in.`
-> a windows protection windows can also appear: "Windows protected your PC" -> the project is available online
-> and was tested but him or its features can go wrong... 
+> `This browser or app may not be secure. Learn more`
+> `Try using a different browser. If you’re already using a supported browser, you can try again to sign in.`
+
+> [!NOTE]
+> a windows protection windows can also appear: "Windows protected your PC" -> the project is available online and was tested but him or its features can go wrong... 
 
 > [!WARNING]
 > the browser or its features can go wrong !!!
