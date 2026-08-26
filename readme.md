@@ -1,3 +1,1 @@
-> python minneola.py
-or
-> py minneola.py
+> `python minneola.py`
